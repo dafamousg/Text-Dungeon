@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
+using Text_Dungeon.Secret;
 using Text_Dungeon.Model.Character;
 using Text_Dungeon.Tools;
 
@@ -11,11 +12,17 @@ namespace Text_Dungeon
     {
         public void GameStart()
         {
+            Console.WriteLine("Enter your name:");
+            string name = Console.ReadLine();
+            //Secret Messages
+            SecretMessage message = new SecretMessage(name);
+
             //Player
             var mainCharacter = new Character(string.Empty)
             {
                 NextRoom = "1E",
-                Speed = 2
+                Speed = 2,
+                SecretMessage = message
             };
 
             //Armour
@@ -80,6 +87,7 @@ namespace Text_Dungeon
 
             do
             {
+                mainCharacter.NextRoom = "SURPRISEMESSAGE";
                 switch (mainCharacter.NextRoom.ToUpper())
                 {
                     case "1E":
@@ -93,7 +101,7 @@ namespace Text_Dungeon
                         mainCharacter.PlayerHasWon = true;
                         break;
                     case "SURPRISEMESSAGE":
-                        SecretMessage.Message(mainCharacter);
+                        SecretMessage.Message(mainCharacter.SecretMessage);
                         mainCharacter.PlayerHasWon = true;
                         Text.Continue();
                         break;

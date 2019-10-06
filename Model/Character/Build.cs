@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Text_Dungeon.Secret;
 
 namespace Text_Dungeon.Model.Character
 {
@@ -15,6 +16,7 @@ namespace Text_Dungeon.Model.Character
         public string NextRoom { get; set; }    //Next room to enter
         public bool IsInBattle { get; set; }    //If player is in battle
         public bool IsTurnToFight { get; set; } //Who's turn it is
+        public SecretMessage SecretMessage { get; set; }
         public Weapon Weapon { get; set; }      //Weapon for stronger attack
         public Armour Armour { get; set; }      //Armour for protection
 

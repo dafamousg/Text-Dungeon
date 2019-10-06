@@ -6,8 +6,6 @@ namespace Text_Dungeon.Tools
 {
     public class Text
     {
-
-
         public static void TestUI()
         {
             Console.WriteLine("Test UI\nPress enter to continue..");

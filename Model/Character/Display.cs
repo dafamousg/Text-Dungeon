@@ -58,6 +58,8 @@ namespace Text_Dungeon.Model.Character
                 Inventory.GetInventory();
                 Text.Continue();
             }
+
+            SecretMessage.GetStars();
         }
     }
 }
