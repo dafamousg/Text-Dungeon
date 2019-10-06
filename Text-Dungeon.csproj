@@ -6,8 +6,4 @@
     <RootNamespace>Text_Dungeon</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\Character\" />
-  </ItemGroup>
-
 </Project>

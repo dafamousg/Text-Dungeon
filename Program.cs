@@ -6,7 +6,11 @@ namespace Text_Dungeon
     {
         static void Main(string[] args)
         {
-            
+            Game firstGame = new Game();
+
+            firstGame.GameStart();
+
+            Console.ReadKey();
         }
     }
 }
