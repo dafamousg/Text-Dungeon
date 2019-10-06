@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Text_Dungeon.Model.Character;
+using Text_Dungeon.Tools;
 
 namespace Text_Dungeon
 {
@@ -41,7 +42,7 @@ namespace Text_Dungeon
                 }
 
                 if (enemy.Health != 0)
-                    Game.Continue();
+                    Text.Continue();
 
             } while (enemy.Health > 0);
 
@@ -58,12 +59,12 @@ namespace Text_Dungeon
             do
             {
                 Console.WriteLine($"{attacker.Name} has: {attackTurns} moves left");
-                trueAttack = rnd.Next(Game.MakeZeroIfLess(attacker.Strength - defender.Defense), attacker.Strength);
+                trueAttack = rnd.Next(Stats.MakeZeroIfLess(attacker.Strength - defender.Defense), attacker.Strength);
                 Console.WriteLine($"Damage from attack: {trueAttack}");
 
                 defender.Health -= trueAttack;
 
-                defender.Health = Game.MakeZeroIfLess(defender.Health);
+                defender.Health = Stats.MakeZeroIfLess(defender.Health);
                 Console.WriteLine($"{defender.Name} health: {defender.Health}");
 
 
@@ -83,12 +84,6 @@ namespace Text_Dungeon
             defender.IsTurnToFight = true;
 
             return defender;
-        }
-
-        public static void TestUI()
-        {
-            Console.WriteLine("Test UI\nPress enter to continue..");
-            Console.ReadLine();
         }
 
         public static void Magic(Character player, Character boss)

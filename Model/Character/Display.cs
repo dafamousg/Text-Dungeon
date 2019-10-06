@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Text_Dungeon.Tools;
 
 namespace Text_Dungeon.Model.Character
 {
@@ -50,12 +51,12 @@ namespace Text_Dungeon.Model.Character
             Console.WriteLine($"Magic: {Magic}");
             //Console.WriteLine($"Weapon: {Weapon.Name}, Boost: {Weapon.Boost}");
             //Console.WriteLine($"Armour: {Armour.Name}, Boost: {Armour.Boost}");
-            Game.Continue();
+            Text.Continue();
 
             if (!Inventory.InventoryIsEmpty())
             {
                 Inventory.GetInventory();
-                Game.Continue();
+                Text.Continue();
             }
         }
     }
