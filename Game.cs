@@ -87,7 +87,6 @@ namespace Text_Dungeon
 
             do
             {
-                mainCharacter.NextRoom = "SURPRISEMESSAGE";
                 switch (mainCharacter.NextRoom.ToUpper())
                 {
                     case "1E":
@@ -98,7 +97,6 @@ namespace Text_Dungeon
                         break;
                     case "1W":
                         CurrentRoom(mainCharacter, room1W);
-                        mainCharacter.PlayerHasWon = true;
                         break;
                     case "SURPRISEMESSAGE":
                         SecretMessage.Message(mainCharacter.SecretMessage);
@@ -109,6 +107,9 @@ namespace Text_Dungeon
                         break;
                 }
                 Console.Clear();
+                if(mainCharacter.SecretMessage.CollectedAllStars())
+                    mainCharacter.NextRoom = "SURPRISEMESSAGE";
+
             } while (!mainCharacter.PlayerHasLost && !mainCharacter.PlayerHasWon);
 
             Console.WriteLine("Outside of loop\nYou have won.");
