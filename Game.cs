@@ -144,31 +144,16 @@ namespace Text_Dungeon
 
             Console.WriteLine($"Player health {player.Health}");
 
-            ResetStats(player, temp_player);
+            Stats.ResetStats(player, temp_player);
 
             player.NextRoom = Choices.ChooseDoor(room);
-
-
 
             Console.WriteLine($"Player health {player.Health}");
 
             return player;
         }
 
-        public static void ResetStats(Character player, Character temp)
-        {
-            player.Health = temp.Health;
 
-            if(player.Defense < temp.Defense)
-                player.Defense = temp.Defense;
-
-            if (player.Strength < temp.Strength)
-                player.Strength = temp.Strength;
-
-            if (player.Speed < temp.Speed)
-                player.Speed = temp.Speed;
-
-        }
 
     }
 }

@@ -22,7 +22,6 @@ namespace Text_Dungeon.Tools
             return (int)(value * (increase + character));
         }
 
-
         public static void AddNewItemFromRoom(Character player, Room room)
         {
             if (room.KeyItem != null)
@@ -46,6 +45,20 @@ namespace Text_Dungeon.Tools
                 else if (player.Weapon != room.WeaponItem)
                     Choices.Choose_Weapon(player, room.WeaponItem);
             }
+        }
+
+        public static void ResetStats(Character player, Character temp)
+        {
+            player.Health = temp.Health;
+
+            if (player.Defense < temp.Defense)
+                player.Defense = temp.Defense;
+
+            if (player.Strength < temp.Strength)
+                player.Strength = temp.Strength;
+
+            if (player.Speed < temp.Speed)
+                player.Speed = temp.Speed;
         }
     }
 }

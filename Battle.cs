@@ -50,7 +50,6 @@ namespace Text_Dungeon
 
             } while (enemy.Health > 0);
 
-
             return player;
         }
 
@@ -115,9 +114,6 @@ namespace Text_Dungeon
                     Attack(temp, boss);
                     break;
             }
-
-
         }
-
     }
 }
