@@ -46,7 +46,7 @@ namespace Text_Dungeon.Secret
                 this.GetStars();
             }
             else
-                Console.WriteLine("You collected all stars!\nYou are ready to unlock the secret message.");
+                Console.WriteLine("You collected all stars!\nFinish the game to unlock the secret message.");
 
 
         }

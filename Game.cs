@@ -33,8 +33,8 @@ namespace Text_Dungeon
             var weapon1 = new Weapon("Sword of Destiny", 10, 20);
 
             //Potion
-            var health = new Potion("Health potion", 10);
-            var health2 = new Potion("Health of a dragon", 15);
+            var health = new Potion("Healt", (int)HealthBoost.Low);
+            var health2 = new Potion("Health1", (int)HealthBoost.Low);
             var speed = new Potion("Speed potion", 1);
 
             //Key
@@ -76,12 +76,15 @@ namespace Text_Dungeon
 
 
             Choices.ClassSelection(mainCharacter);
+
+            mainCharacter.Inventory.PickupPotion(health);
+            mainCharacter.Inventory.PickupPotion(speed);
+            mainCharacter.Inventory.PickupPotion(health2);
+
             //AddNewItemFromRoom(mainCharacter, room1C);
             //AddNewItemFromRoom(mainCharacter, room1E);
             //AddNewItemFromRoom(mainCharacter, room1W);
-            //mainCharacter.Inventory.PickupPotion(health);
             //mainCharacter.Inventory.PickupPotion(speed);
-            //mainCharacter.Inventory.PickupPotion(health2);
             //mainCharacter.Inventory.PickupKey(key1);
             //mainCharacter.Inventory.PickupKey(key2);
 
@@ -117,7 +120,6 @@ namespace Text_Dungeon
             Console.ReadKey();
         }
 
-
         //When player enters a room
         public static Character CurrentRoom(Character player, Room room)
         {
@@ -140,11 +142,32 @@ namespace Text_Dungeon
             if (room.HasItem())
                 Stats.AddNewItemFromRoom(player, room);
 
-            player.Health = temp_player.Health;
+            Console.WriteLine($"Player health {player.Health}");
+
+            ResetStats(player, temp_player);
 
             player.NextRoom = Choices.ChooseDoor(room);
 
+
+
+            Console.WriteLine($"Player health {player.Health}");
+
             return player;
+        }
+
+        public static void ResetStats(Character player, Character temp)
+        {
+            player.Health = temp.Health;
+
+            if(player.Defense < temp.Defense)
+                player.Defense = temp.Defense;
+
+            if (player.Strength < temp.Strength)
+                player.Strength = temp.Strength;
+
+            if (player.Speed < temp.Speed)
+                player.Speed = temp.Speed;
+
         }
 
     }

@@ -17,8 +17,9 @@ namespace Text_Dungeon
                 Console.WriteLine("Choose what action to do");
                 Console.WriteLine("1: Attack");
                 Console.WriteLine("2: Magic");
-                Console.WriteLine("3: Player Info");
-                Console.WriteLine("4: Enemy Info");
+                Console.WriteLine("3: Drink Potion");
+                Console.WriteLine("4: Player Info");
+                Console.WriteLine("5: Enemy Info");
                 s = Console.ReadLine();
                 Console.Clear();
                 switch (s)
@@ -34,9 +35,12 @@ namespace Text_Dungeon
                             Attack(enemy, player);
                         break;
                     case "3":
-                        player.GetInfo();
+                        player.DrinkPotion();
                         break;
                     case "4":
+                        player.GetInfo();
+                        break;
+                    case "5":
                         enemy.GetInfo();
                         break;
                 }

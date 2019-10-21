@@ -10,6 +10,7 @@ namespace Text_Dungeon.Model.Character
         public string Name { get; set; }        //Name
         public double Magic { get; set; }       //Magic to increse stats
         public int Health { get; set; }         //Health
+        private int MaxHealth { get; set; }     //Max Health
         public int Strength { get; set; }       //Attack damage
         public int Defense { get; set; }        //Defense against attack
         public int Speed { get; set; }          //Speed of attacks
@@ -32,6 +33,7 @@ namespace Text_Dungeon.Model.Character
             Strength = 10;
             Defense = 10;
             Speed = 1;
+            MaxHealth = Health;
 
         }
         public Character(string name, double magic, int health, int strength, int defense, int speed)
@@ -42,6 +44,7 @@ namespace Text_Dungeon.Model.Character
             Strength = strength;
             Defense = defense;
             Speed = speed;
+            MaxHealth = health;
         }
 
         public object Clone()

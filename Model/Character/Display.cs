@@ -41,6 +41,48 @@ namespace Text_Dungeon.Model.Character
             }
         }
 
+        public void DrinkPotion()
+        {
+            var selectedDrink = false;
+            Potion selection;
+            string choice;
+            do
+            {
+                selection = Inventory.UsePotion();
+                if (selection == null)
+                    choice = "";
+                else
+                    choice = selection.GetPotionType().ToUpper();
+
+                switch (choice)
+                {
+                    case "HEALTH":
+                        Health += selection.GetPotionBoost();
+                        selectedDrink = true;
+                        break;
+                    case "DENESE":
+                        Defense += selection.GetPotionBoost();
+                        selectedDrink = true;
+                        break;
+                    case "STRENGTH":
+                        Strength += selection.GetPotionBoost();
+                        selectedDrink = true;
+                        break;
+                    case "SPEED":
+                        Speed += selection.GetPotionBoost();
+                        selectedDrink = true;
+                        break;
+                    default:
+                        Console.WriteLine("Potion not available");
+                        break;
+                }
+                
+            } while (!selectedDrink);
+            Console.WriteLine($"You drank: {selection.GetPotionType()} Potion.");
+        }
+
+
+
         public void GetInfo()
         {
             Console.WriteLine($"Name: {Name}");
