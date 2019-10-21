@@ -36,6 +36,7 @@ namespace Text_Dungeon.Secret
         {
             Console.WriteLine($"Stars: {Stars}/{MaxStars}");
             Thread.Sleep(3000);
+            Console.Clear();
         }
         public void CollectStar()
         {

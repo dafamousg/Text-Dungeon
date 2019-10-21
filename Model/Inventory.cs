@@ -15,7 +15,7 @@ namespace Text_Dungeon.Model
         public void PickupPotion(Potion potion)
         {
             potionInventory.Add(potion);
-            Console.WriteLine($"{potion.Name} got picked up.\nType: {potion.GetPotionType()}");
+            Console.WriteLine($"{potion.GetPotionType()} Potion got picked up.");
             Thread.Sleep(3000);
             Console.Clear();
         }
@@ -161,6 +161,7 @@ namespace Text_Dungeon.Model
                 }
             }
         }
+
         public void PotionAmount()
         {
 

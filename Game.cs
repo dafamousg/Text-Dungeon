@@ -142,13 +142,12 @@ namespace Text_Dungeon
             if (room.HasItem())
                 Stats.AddNewItemFromRoom(player, room);
 
-            Console.WriteLine($"Player health {player.Health}");
-
             Stats.ResetStats(player, temp_player);
+
+            Text.TestUI("Under ReserStats");
 
             player.NextRoom = Choices.ChooseDoor(room);
 
-            Console.WriteLine($"Player health {player.Health}");
 
             return player;
         }
