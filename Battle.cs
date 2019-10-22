@@ -14,6 +14,7 @@ namespace Text_Dungeon
             string s;
             do
             {
+                bool InfoEntered = false;
                 Console.WriteLine("Choose what action to do");
                 Console.WriteLine("1: Attack");
                 Console.WriteLine("2: Magic");
@@ -36,17 +37,24 @@ namespace Text_Dungeon
                         break;
                     case "3":
                         player.DrinkPotion();
+                        InfoEntered = true;
                         break;
                     case "4":
                         player.GetInfo();
+                        InfoEntered = true;
                         break;
                     case "5":
                         enemy.GetInfo();
+                        InfoEntered = true;
+                        break;
+                    default:
+                        InfoEntered = true;
                         break;
                 }
 
-                if (enemy.Health != 0)
+                if (enemy.Health != 0 && !InfoEntered)
                     Text.Continue();
+
 
             } while (enemy.Health > 0);
 

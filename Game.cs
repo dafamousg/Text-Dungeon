@@ -12,9 +12,14 @@ namespace Text_Dungeon
     {
         public void GameStart()
         {
-
             Console.WriteLine("Enter your name:");
+
             string name = Console.ReadLine();
+            Console.Clear();
+
+            //Maps
+            var map1 = Maps.FirstMap();
+            
             //Secret Messages
             SecretMessage message = new SecretMessage(name);
 
@@ -24,9 +29,10 @@ namespace Text_Dungeon
                 SecretMessage = message
             };
 
-            var map1 = Maps.FirstMap(mainCharacter);
-
             Choices.ClassSelection(mainCharacter);
+
+            //Initianalize Map
+            Maps.AddStarsToMap(mainCharacter,map1);
 
 
             do
@@ -41,20 +47,25 @@ namespace Text_Dungeon
                         break;
                     }
                     else if (mainCharacter.NextRoom == room)
-                        CurrentRoom(mainCharacter,room);
-                    else
                     {
-                        Console.WriteLine("Something Went wrong..");
-                        Console.ReadLine();
+                        CurrentRoom(mainCharacter,room);
+                        break;
                     }
+                    //else
+                    //    Console.WriteLine($"Something went wrong {room.Name}");
                 }
                 Console.Clear();
 
             } while (!mainCharacter.PlayerHasLost && !mainCharacter.PlayerHasWon);
 
-            Console.WriteLine("Outside of loop\nYou have won.");
+            if(mainCharacter.PlayerHasWon)
+                Console.WriteLine("You have won.");
+            else if (mainCharacter.PlayerHasLost)
+                Console.WriteLine("You Lost :/");
+            else
+                Console.WriteLine("Something went wrong");
 
-            Console.ReadKey();            
+            Text.Continue();            
         }
 
 
@@ -77,13 +88,16 @@ namespace Text_Dungeon
                 Console.WriteLine("Room seems to be empty...");
             }
 
-            if (room.HasItem())
-                Stats.AddNewItemFromRoom(player, room);
-
             Stats.ResetStats(player, temp_player);
 
+            if (room.HasItem())
+                Stats.AddNewItemFromRoom(player, room);
+            if (room.Stars != 0)
+                player.SecretMessage.CollectStar(room.Stars);
 
-            player.NextRoom = Choices.ChooseDoor(room);
+
+            if(!player.SecretMessage.CollectedAllStars())
+                player.NextRoom = Choices.ChooseDoor(room);
 
 
             return player;

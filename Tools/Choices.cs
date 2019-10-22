@@ -20,7 +20,7 @@ namespace Text_Dungeon.Tools
             {
                 Console.WriteLine("Press a number between 1-3 to continue");
                 Console.WriteLine("Class '1': Alva (Elf Princess)");
-                Console.WriteLine("Class '2': Gino (Black Magician");
+                Console.WriteLine("Class '2': Gino (Black Magician)");
                 Console.WriteLine("Class '3': Kelly (Martial artist)");
 
                 string characterSelection = Console.ReadLine();
@@ -133,24 +133,36 @@ namespace Text_Dungeon.Tools
         }
         public static Room ChooseDoor(Room room)
         {
-            room.GetAvailableDoors();
+            Room selectedRoom;
             string door;
 
-            door = Console.ReadLine();
-
-            switch (door.ToUpper())
+            do
             {
-                case "S":
-                    return room.SouthDoor;
-                case "N":
-                    return room.NorthDoor;
-                case "E":
-                    return room.EastDoor;
-                case "W":
-                    return room.WestDoor;
-                default:
-                    return room;
-            }
+                room.GetAvailableDoors();
+                door = Console.ReadLine();
+
+                switch (door.ToUpper())
+                {
+                    case "S":
+                        selectedRoom = room.SouthDoor;
+                        break;
+                    case "N":
+                        selectedRoom = room.NorthDoor;
+                        break;
+                    case "E":
+                        selectedRoom = room.EastDoor;
+                        break;
+                    case "W":
+                        selectedRoom = room.WestDoor;
+                        break;
+                    default:
+                        selectedRoom = null;
+                        break;
+                }
+                Console.Clear();
+            } while (selectedRoom == null);
+
+            return selectedRoom;
         }
 
     }

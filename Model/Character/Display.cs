@@ -43,14 +43,19 @@ namespace Text_Dungeon.Model.Character
 
         public void DrinkPotion()
         {
-            var selectedDrink = false;
             Potion selection;
             string choice;
+            bool exit;
             do
             {
+                exit = true;
                 selection = Inventory.UsePotion();
                 if (selection == null)
                     choice = "";
+                else if (selection.Name.ToUpper() == "EXIT")
+                    choice = selection.Name.ToUpper();
+                else if (selection.Name.ToUpper() == "EMPTY")
+                    choice = selection.Name.ToUpper();
                 else
                     choice = selection.GetPotionType().ToUpper();
 
@@ -58,27 +63,38 @@ namespace Text_Dungeon.Model.Character
                 {
                     case "HEALTH":
                         Health += selection.GetPotionBoost();
-                        selectedDrink = true;
                         break;
                     case "DENESE":
                         Defense += selection.GetPotionBoost();
-                        selectedDrink = true;
                         break;
                     case "STRENGTH":
                         Strength += selection.GetPotionBoost();
-                        selectedDrink = true;
                         break;
                     case "SPEED":
                         Speed += selection.GetPotionBoost();
-                        selectedDrink = true;
+                        break;
+                    case "EXIT":
+                        selection = null;
+                        break;
+                    case "EMPTY":
+                        selection = null;
+                        exit = false;
                         break;
                     default:
                         Console.WriteLine("Potion not available");
+                        Thread.Sleep(3000);
+                        exit = false;
+                        Console.Clear();
                         break;
                 }
-                
-            } while (!selectedDrink);
-            Console.WriteLine($"You drank: {selection.GetPotionType()} Potion.");
+                if(selection != null && exit)
+                {
+                    Console.WriteLine($"You drank: {selection.GetPotionType()} Potion.");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                }
+
+            } while (!exit);
         }
 
 
@@ -100,8 +116,8 @@ namespace Text_Dungeon.Model.Character
                 Inventory.GetInventory();
                 Text.Continue();
             }
-
-            SecretMessage.GetStars();
+            if(SecretMessage != null)
+                SecretMessage.GetStars();
         }
     }
 }

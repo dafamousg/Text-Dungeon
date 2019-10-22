@@ -25,10 +25,16 @@ namespace Text_Dungeon.Tools
         public static void AddNewItemFromRoom(Character player, Room room)
         {
             if (room.KeyItem != null)
+            {
                 player.Inventory.PickupKey(room.KeyItem);
+                room.KeyItem = null;
+            }
 
             if (room.PotionItem != null)
+            {
                 player.Inventory.PickupPotion(room.PotionItem);
+                room.PotionItem = null;
+            }
 
             if (room.ArmourItem != null)
             {
@@ -36,6 +42,8 @@ namespace Text_Dungeon.Tools
                     player.PickupArmour(room.ArmourItem);
                 else if (player.Armour != room.ArmourItem)
                     Choices.Choose_Armour(player, room.ArmourItem);
+                if (player.Armour == room.ArmourItem)
+                    room.ArmourItem = null;
             }
 
             if (room.WeaponItem != null)
@@ -44,6 +52,8 @@ namespace Text_Dungeon.Tools
                     player.PickupWeapon(room.WeaponItem);
                 else if (player.Weapon != room.WeaponItem)
                     Choices.Choose_Weapon(player, room.WeaponItem);
+                if (player.Weapon == room.WeaponItem)
+                    room.WeaponItem = null;
             }
         }
 

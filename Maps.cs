@@ -73,7 +73,7 @@ namespace Text_Dungeon
 
 
 
-        public static List<Room> FirstMap(Character player)
+        public static List<Room> FirstMap()
         {
             List<Room> map = new List<Room>();
 
@@ -102,7 +102,7 @@ namespace Text_Dungeon
             var DragonEnemy = new Character("Dragan of Darkness");
 
             //Rooms
-            Room room1E = new Room(Text.infoRoom1E, Text.infoRoom1E, null, ElfeArmour, null, st3, null);
+            Room room1E = new Room(Text.infoRoom1E, Text.infoRoom1E, null, null, null, st3, null);
             Room room2E = new Room(Text.infoRoom1N,Text.enemyRoom1N,GoblinEnemy, null, DimondClub, null, null);
 
 
@@ -112,9 +112,31 @@ namespace Text_Dungeon
             map.Add(room1E);
             map.Add(room2E);
 
-            player.NextRoom = room1E;
-
             return map;
+        }
+
+
+        public static void AddStarsToMap(Character player, List<Room> map)
+        {
+            int amount = 0;
+            int roomsWithEnemy = 0;
+
+            foreach (var item in map)
+            {
+                if (item.Enemy != null)
+                    roomsWithEnemy++;
+            }
+
+            int stars = player.SecretMessage.GetMaxStars() / roomsWithEnemy;
+            foreach (var item in map)
+            {
+                amount++;
+                if(amount == 1)
+                    player.NextRoom = item;
+                if(item.Enemy != null)
+                    item.AddStars((int)Math.Round((decimal)stars));
+            }
+
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Text_Dungeon
             Game firstGame = new Game();
 
             firstGame.GameStart();
-
-            Console.ReadKey();
         }
     }
 }

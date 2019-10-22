@@ -38,6 +38,8 @@ namespace Text_Dungeon.Model
                 Console.WriteLine("3: Strength");
                 Console.WriteLine("4: Defense");
                 Console.WriteLine("5: Speed");
+                Console.WriteLine("6: Exit");
+                Console.WriteLine("Just click enter to continue");
                 select = Console.ReadLine();
                 Console.Clear();
                 switch (select)
@@ -62,22 +64,22 @@ namespace Text_Dungeon.Model
                         select = PotionType.Speed.ToString();
                         Selected = true;
                         break;
+                    case "6":
+                        return new Potion("Exit");
                     default:
-                        return null;
+                        return new Potion("Empty");
                 }
                 Console.Clear();
             } while (!Selected);
 
-
             foreach (var i in potionInventory)
             {
                 if (i.GetPotionType().ToUpper() == select.ToUpper())
-                {                        
+                {
                     potionInventory.Remove(i);
                     return i;
                 }
             }
-
 
             return null;
         }
@@ -127,7 +129,7 @@ namespace Text_Dungeon.Model
         }
         public void GetInventory()
         {
-            var showDetails = true;
+            var showDetails = false;
             Console.WriteLine("Inventory:");
             if (keyInventory.Count != 0)
             {
@@ -145,6 +147,7 @@ namespace Text_Dungeon.Model
                 Console.WriteLine("'2' No");
 
                 string s = Console.ReadLine();
+                Console.Clear();
                 if (s == "1")
                     showDetails = true;
                 else if (s == "2")

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using Text_Dungeon.Tools;
 
 namespace Text_Dungeon.Model.Character
 {
@@ -9,7 +11,7 @@ namespace Text_Dungeon.Model.Character
         public string Name { get; set; }
         public string RoomText { get; set; }
         public string EnemyText { get; set; }
-        public bool HasMark { get; set; }
+        public int Stars { get; set; }
         public Room WestDoor { get; set; }
         public Room EastDoor { get; set; }
         public Room NorthDoor { get; set; }
@@ -44,6 +46,11 @@ namespace Text_Dungeon.Model.Character
 
         }
 
+        public void AddStars(int star)
+        {
+            Stars = star;
+        }
+
         public bool HasItem()
         {
             if (ArmourItem != null || WeaponItem != null || PotionItem != null || KeyItem != null)
@@ -58,6 +65,8 @@ namespace Text_Dungeon.Model.Character
             
             if (Enemy != null)
                 Console.WriteLine(EnemyText);
+
+            Text.Continue();
         }
         public void GetAvailableDoors()
         {
@@ -72,8 +81,8 @@ namespace Text_Dungeon.Model.Character
             if (WestDoor != null)
                 Console.WriteLine("Press 'W' to enter the West door");
 
-            else if (WestDoor == null && EastDoor == null && NorthDoor == null)
-                Console.WriteLine("There seems to be no other doors here..\nPress 'S' to enter the door you came in from.");
+            if (SouthDoor != null)
+                Console.WriteLine("Press 'S' to enter the South door.");
         }
 
     }

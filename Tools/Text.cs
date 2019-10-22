@@ -24,8 +24,8 @@ namespace Text_Dungeon.Tools
         public static void Continue()
         {
             Console.WriteLine();
-            Console.WriteLine("Press enter to continue");
-            Console.ReadLine();
+            Console.WriteLine("Press any button to continue");
+            Console.ReadKey();
             Console.Clear();
         }
     }
