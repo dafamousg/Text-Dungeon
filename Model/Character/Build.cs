@@ -14,7 +14,7 @@ namespace Text_Dungeon.Model.Character
         public int Strength { get; set; }       //Attack damage
         public int Defense { get; set; }        //Defense against attack
         public int Speed { get; set; }          //Speed of attacks
-        public string NextRoom { get; set; }    //Next room to enter
+        public Room NextRoom { get; set; }    //Next room to enter
         public bool IsInBattle { get; set; }    //If player is in battle
         public bool IsTurnToFight { get; set; } //Who's turn it is
         public SecretMessage SecretMessage { get; set; }

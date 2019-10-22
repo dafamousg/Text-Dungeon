@@ -7,14 +7,13 @@ namespace Text_Dungeon.Model.Character
     public class Room
     {
         public string Name { get; set; }
-        public string InfoText { get; set; }
+        public string RoomText { get; set; }
         public string EnemyText { get; set; }
-        public bool HasEnemy { get; set; }
         public bool HasMark { get; set; }
-        public string WestDoor { get; set; }
-        public string EastDoor { get; set; }
-        public string NorthDoor { get; set; }
-        public string SouthDoor { get; set; }
+        public Room WestDoor { get; set; }
+        public Room EastDoor { get; set; }
+        public Room NorthDoor { get; set; }
+        public Room SouthDoor { get; set; }
         public Character Enemy { get; set; }
         public Armour ArmourItem { get; set; }
         public Weapon WeaponItem { get; set; }
@@ -23,8 +22,26 @@ namespace Text_Dungeon.Model.Character
 
         public Room()
         {
-            if (Enemy != null)
-                HasEnemy = true;
+            
+        }
+        public Room(string info, string enemyText,Character enemy, Armour armour, Weapon weapon, Potion potion, Key key)
+        {
+            RoomText = info;
+            EnemyText = enemyText;
+            Enemy = enemy;
+            ArmourItem = armour;
+            WeaponItem = weapon;
+            PotionItem = potion;
+            KeyItem = key;
+        }
+        
+        public void AddDoors(Room westDoor, Room eastDoor, Room northDoor, Room southDoor)
+        {
+            WestDoor = westDoor;
+            EastDoor = eastDoor;
+            NorthDoor = northDoor;
+            SouthDoor = southDoor;
+
         }
 
         public bool HasItem()
@@ -37,16 +54,14 @@ namespace Text_Dungeon.Model.Character
 
         public void GetRoomStats()
         {
-            Console.WriteLine($"Room name: {Name}");
-            if (HasEnemy)
+            Console.WriteLine(RoomText);
+            
+            if (Enemy != null)
                 Console.WriteLine(EnemyText);
-            else
-                Console.WriteLine(InfoText);
         }
         public void GetAvailableDoors()
         {
             Console.WriteLine("Choose a door to enter.");
-            Console.WriteLine("Press 'B' to enter the door you came in from.\n");
 
             if (NorthDoor != null)
                 Console.WriteLine("Press 'N' to enter the Nort Door");
@@ -58,7 +73,7 @@ namespace Text_Dungeon.Model.Character
                 Console.WriteLine("Press 'W' to enter the West door");
 
             else if (WestDoor == null && EastDoor == null && NorthDoor == null)
-                Console.WriteLine("There seems to be no other doors here..\nGo back to the previous room.");
+                Console.WriteLine("There seems to be no other doors here..\nPress 'S' to enter the door you came in from.");
         }
 
     }

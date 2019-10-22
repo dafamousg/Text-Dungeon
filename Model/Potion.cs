@@ -13,10 +13,10 @@ namespace Text_Dungeon.Model
     }
     public enum HealthBoost
     {
-        Low = 10,
-        Medium = 20,
-        High = 30,
-        Extreme = 40
+        Low = 40,
+        Medium = 60,
+        High = 80,
+        Extreme = 100
     }
     public enum DefenseBoost
     {
@@ -32,19 +32,30 @@ namespace Text_Dungeon.Model
         private PotionType Type { get; set; }
 
         public Potion() { }
-        public Potion(string name, int boost)
+        public Potion(string name)
         {
             Name = name;
-            Boost = boost;
 
             if (name.ToUpper().Contains("HEALTH"))
+            {
                 Type = PotionType.Health;
+                Boost = (int)HealthBoost.Low;
+            }
             if (name.ToUpper().Contains("STRENGTH"))
+            {
                 Type = PotionType.Strength;
+                Boost = (int)DefenseBoost.Low;
+            }
             if (name.ToUpper().Contains("DEFENSE"))
+            {
                 Type = PotionType.Defense;
+                Boost = (int)DefenseBoost.Low;
+            }
             if (name.ToUpper().Contains("SPEED"))
+            {
                 Type = PotionType.Speed;
+                Boost = 1;
+            }
         }
         
 

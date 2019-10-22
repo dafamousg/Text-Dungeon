@@ -131,7 +131,7 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static string ChooseDoor(Room room)
+        public static Room ChooseDoor(Room room)
         {
             room.GetAvailableDoors();
             string door;
@@ -140,8 +140,8 @@ namespace Text_Dungeon.Tools
 
             switch (door.ToUpper())
             {
-                case "B":
-                    return room.Name;
+                case "S":
+                    return room.SouthDoor;
                 case "N":
                     return room.NorthDoor;
                 case "E":
@@ -149,7 +149,7 @@ namespace Text_Dungeon.Tools
                 case "W":
                     return room.WestDoor;
                 default:
-                    return room.Name;
+                    return room;
             }
         }
 
