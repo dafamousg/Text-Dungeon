@@ -48,7 +48,7 @@ namespace Text_Dungeon.Model.Character
 
         public void AddStars(int star)
         {
-            Stars = star;
+            Stars += star;
         }
 
         public bool HasItem()

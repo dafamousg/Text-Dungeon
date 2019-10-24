@@ -39,7 +39,7 @@ namespace Text_Dungeon
             {
                 foreach (var room in map1)
                 {
-                    if(mainCharacter.SecretMessage.CollectedAllStars())
+                    if (mainCharacter.SecretMessage.CollectedAllStars())
                     {
                         SecretMessage.Message(mainCharacter.SecretMessage);
                         mainCharacter.PlayerHasWon = true;
@@ -48,9 +48,11 @@ namespace Text_Dungeon
                     }
                     else if (mainCharacter.NextRoom == room)
                     {
-                        CurrentRoom(mainCharacter,room);
+                        CurrentRoom(mainCharacter, room);
                         break;
                     }
+                    else if (mainCharacter.Health < 1)
+                        mainCharacter.PlayerHasLost = true;
                     //else
                     //    Console.WriteLine($"Something went wrong {room.Name}");
                 }
@@ -96,8 +98,11 @@ namespace Text_Dungeon
                 player.SecretMessage.CollectStar(room.Stars);
 
 
-            if(!player.SecretMessage.CollectedAllStars())
+            if (!player.SecretMessage.CollectedAllStars())
+            {
                 player.NextRoom = Choices.ChooseDoor(room);
+                room.Stars = 0;
+            }
 
 
             return player;

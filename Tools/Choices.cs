@@ -64,20 +64,22 @@ namespace Text_Dungeon.Tools
             string s;
             bool done = false;
 
-            Console.WriteLine("You already have a weapon on..\nWould You like to change?");
             do
             {
+                Console.WriteLine("You already have a weapon on..\nWould You like to change?");
                 Console.WriteLine("'1' Show stats of both weapons");
                 Console.WriteLine("'2': Yes");
                 Console.WriteLine("'3': No");
                 s = Console.ReadLine();
+                Console.Clear();
                 switch (s)
                 {
                     case "1":
                         Console.WriteLine("Current Weapon:");
-                        player.Armour.ShowStats();
+                        player.Weapon.ShowStats();
                         Console.WriteLine("\nNew Weapon:");
                         new_Weapon.ShowStats();
+                        Text.Continue();
                         break;
                     case "2":
                         player.PickupWeapon(new_Weapon);

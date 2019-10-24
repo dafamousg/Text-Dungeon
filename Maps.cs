@@ -102,15 +102,20 @@ namespace Text_Dungeon
             var DragonEnemy = new Character("Dragan of Darkness");
 
             //Rooms
-            Room room1E = new Room(Text.infoRoom1E, Text.infoRoom1E, null, null, null, st3, null);
-            Room room2E = new Room(Text.infoRoom1N,Text.enemyRoom1N,GoblinEnemy, null, DimondClub, null, null);
+            Room room1E = new Room(Text.infoRoom1E, Text.infoRoom1E, ElfeEnemy, null, SilverSword, st3, null);
+            Room room2E = new Room(Text.infoRoom2E,Text.enemyRoom2E,GoblinEnemy, null, DimondClub, null, null);
+            Room room1C = new Room(Text.infoRoom1C, Text.enemyRoom1C, null, DragonArmour, null, sp1, DragonKey);
 
 
-            room1E.AddDoors(null,null,room2E,null);
             room2E.AddDoors(null,null, null, room1E);
+            room1E.AddDoors(room1C,null,room2E,null);
+            room1C.AddDoors(null,room1E, null, null);
 
+            map.Add(room1C);
             map.Add(room1E);
             map.Add(room2E);
+
+
 
             return map;
         }
@@ -118,25 +123,37 @@ namespace Text_Dungeon
 
         public static void AddStarsToMap(Character player, List<Room> map)
         {
+            Random rnd = new Random();
             int amount = 0;
-            int roomsWithEnemy = 0;
+            int maxStars = player.SecretMessage.GetMaxStars();
+            int rndStars;
 
-            foreach (var item in map)
+            //int roomsWithEnemy = 0;
+            //decimal stars = player.SecretMessage.GetMaxStars() / roomsWithEnemy;
+
+            //foreach (var item in map)
+            //{
+            //    if (item.Enemy != null)
+            //        roomsWithEnemy++;
+            //}
+
+            do
             {
-                if (item.Enemy != null)
-                    roomsWithEnemy++;
-            }
+                foreach (var item in map)
+                {
+                    amount++;
+                    rndStars = rnd.Next(0, maxStars +1);
 
-            int stars = player.SecretMessage.GetMaxStars() / roomsWithEnemy;
-            foreach (var item in map)
-            {
-                amount++;
-                if(amount == 1)
-                    player.NextRoom = item;
-                if(item.Enemy != null)
-                    item.AddStars((int)Math.Round((decimal)stars));
-            }
+                    if(amount == 1)
+                        player.NextRoom = item;
 
+                    if (item.Enemy != null)
+                    {
+                        item.AddStars(rndStars);
+                        maxStars -= rndStars;
+                    }
+                }
+            } while (maxStars != 0);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Text_Dungeon.Secret
             {
                 case "ALVA":
                     Name = name;
-                    MaxStars = 26;
+                    MaxStars = 21;
                     break;
                 default:
                     Name = "Default";
-                    MaxStars = 16;
+                    MaxStars = 15;
                     break;
             }
         }
