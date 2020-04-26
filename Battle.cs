@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Text_Dungeon.Model.Character;
+using Text_Dungeon.Model;
 using Text_Dungeon.Tools;
 
 namespace Text_Dungeon
 {
     public class Battle
     {
-        public static Character Battleground(Character player, Character enemy)
+        public static Player Battleground(Player player, Enemy enemy)
         {
             string s;
             do
             {
+                bool InfoEntered = false;
                 Console.WriteLine("Choose what action to do");
                 Console.WriteLine("1: Attack");
                 Console.WriteLine("2: Magic");
-                Console.WriteLine("3: Player Info");
-                Console.WriteLine("4: Enemy Info");
+                Console.WriteLine("3: Drink Potion");
+                Console.WriteLine("4: Player Info");
+                Console.WriteLine("5: Enemy Info");
                 s = Console.ReadLine();
                 Console.Clear();
                 switch (s)
@@ -34,18 +36,27 @@ namespace Text_Dungeon
                             Attack(enemy, player);
                         break;
                     case "3":
-                        player.GetInfo();
+                        player.DrinkPotion();
+                        InfoEntered = true;
                         break;
                     case "4":
+                        player.GetInfo();
+                        InfoEntered = true;
+                        break;
+                    case "5":
                         enemy.GetInfo();
+                        InfoEntered = true;
+                        break;
+                    default:
+                        InfoEntered = true;
                         break;
                 }
 
-                if (enemy.Health != 0)
+                if (enemy.Health != 0 && !InfoEntered)
                     Text.Continue();
 
-            } while (enemy.Health > 0);
 
+            } while (enemy.Health > 0);
 
             return player;
         }
@@ -86,7 +97,7 @@ namespace Text_Dungeon
             return defender;
         }
 
-        public static void Magic(Character player, Character boss)
+        public static void Magic(Player player, Character boss)
         {
             var temp = (Character)player.Clone();
 
@@ -111,9 +122,6 @@ namespace Text_Dungeon
                     Attack(temp, boss);
                     break;
             }
-
-
         }
-
     }
 }

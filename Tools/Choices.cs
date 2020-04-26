@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
-using Text_Dungeon.Model.Character;
 
 namespace Text_Dungeon.Tools
 {
     public class Choices
     {
         //Intro to the game and character select
-        public static Character ClassSelection(Character player)
+        public static Player ClassSelection(Player player)
         {
             int classSelected = 0;
             double elf = 0.20;
@@ -20,7 +19,7 @@ namespace Text_Dungeon.Tools
             {
                 Console.WriteLine("Press a number between 1-3 to continue");
                 Console.WriteLine("Class '1': Alva (Elf Princess)");
-                Console.WriteLine("Class '2': Gino (Black Magician");
+                Console.WriteLine("Class '2': Gino (Black Magician)");
                 Console.WriteLine("Class '3': Kelly (Martial artist)");
 
                 string characterSelection = Console.ReadLine();
@@ -59,25 +58,27 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static Character Choose_Weapon(Character player, Weapon new_Weapon)
+        public static Player Choose_Weapon(Player player, Weapon new_Weapon)
         {
             string s;
             bool done = false;
 
-            Console.WriteLine("You already have a weapon on..\nWould You like to change?");
             do
             {
+                Console.WriteLine("You already have a weapon on..\nWould You like to change?");
                 Console.WriteLine("'1' Show stats of both weapons");
                 Console.WriteLine("'2': Yes");
                 Console.WriteLine("'3': No");
                 s = Console.ReadLine();
+                Console.Clear();
                 switch (s)
                 {
                     case "1":
                         Console.WriteLine("Current Weapon:");
-                        player.Armour.ShowStats();
+                        player.Weapon.ShowStats();
                         Console.WriteLine("\nNew Weapon:");
                         new_Weapon.ShowStats();
+                        Text.Continue();
                         break;
                     case "2":
                         player.PickupWeapon(new_Weapon);
@@ -94,7 +95,7 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static Character Choose_Armour(Character player, Armour new_Armour)
+        public static Player Choose_Armour(Player player, Armour new_Armour)
         {
             string s;
             bool done = false;
@@ -131,26 +132,38 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static string ChooseDoor(Room room)
+        public static Room ChooseDoor(Room room)
         {
-            room.GetAvailableDoors();
+            Room selectedRoom;
             string door;
 
-            door = Console.ReadLine();
-
-            switch (door.ToUpper())
+            do
             {
-                case "B":
-                    return room.Name;
-                case "N":
-                    return room.NorthDoor;
-                case "E":
-                    return room.EastDoor;
-                case "W":
-                    return room.WestDoor;
-                default:
-                    return room.Name;
-            }
+                room.GetAvailableDoors();
+                door = Console.ReadLine();
+
+                switch (door.ToUpper())
+                {
+                    case "S":
+                        selectedRoom = room.SouthDoor;
+                        break;
+                    case "N":
+                        selectedRoom = room.NorthDoor;
+                        break;
+                    case "E":
+                        selectedRoom = room.EastDoor;
+                        break;
+                    case "W":
+                        selectedRoom = room.WestDoor;
+                        break;
+                    default:
+                        selectedRoom = null;
+                        break;
+                }
+                Console.Clear();
+            } while (selectedRoom == null);
+
+            return selectedRoom;
         }
 
     }

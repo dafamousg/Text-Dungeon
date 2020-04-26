@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Text_Dungeon.Model.Character;
+using Text_Dungeon.Tools;
 
 namespace Text_Dungeon.Secret
 {
@@ -18,11 +18,11 @@ namespace Text_Dungeon.Secret
             {
                 case "ALVA":
                     Name = name;
-                    MaxStars = 26;
+                    MaxStars = 21;
                     break;
                 default:
                     Name = "Default";
-                    MaxStars = 16;
+                    MaxStars = 15;
                     break;
             }
         }
@@ -36,19 +36,39 @@ namespace Text_Dungeon.Secret
         {
             Console.WriteLine($"Stars: {Stars}/{MaxStars}");
             Thread.Sleep(3000);
+            Console.Clear();
         }
-        public void CollectStar()
+        public void CollectStar(int star)
         {
             if (Stars != MaxStars)
             {
-                Stars++;
-                Console.WriteLine("Star Added To Collection!");
+                if ((Stars + star) > MaxStars)
+                    Stars = MaxStars;
+                else
+                {
+                    Stars += star;
+                    Console.WriteLine($"{star} Stars Added To Collection!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                }
+
                 this.GetStars();
             }
-            else
-                Console.WriteLine("You collected all stars!\nYou are ready to unlock the secret message.");
+            if(Stars == MaxStars)
+            {
+                //Console.WriteLine("You collected all stars!\nFinish the game to unlock the secret message.");
+                Console.WriteLine($"You have won!\nYou collected all {MaxStars} Stars!");
+                Console.WriteLine();
+                Console.WriteLine("Press any button to display the secret message!");
+                Console.ReadKey();
+            }
 
 
+        }
+
+        public int GetMaxStars()
+        {
+            return MaxStars;
         }
     }
 }

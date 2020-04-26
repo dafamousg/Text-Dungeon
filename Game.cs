@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
 using Text_Dungeon.Secret;
-using Text_Dungeon.Model.Character;
 using Text_Dungeon.Tools;
 
 namespace Text_Dungeon
@@ -13,115 +12,68 @@ namespace Text_Dungeon
         public void GameStart()
         {
             Console.WriteLine("Enter your name:");
+
             string name = Console.ReadLine();
+            Console.Clear();
+
+            //Maps
+            var map1 = Maps.FirstMap();
+            
             //Secret Messages
             SecretMessage message = new SecretMessage(name);
 
             //Player
-            var mainCharacter = new Character(string.Empty)
+            Player player = new Player(name)
             {
-                NextRoom = "1E",
-                Speed = 2,
                 SecretMessage = message
             };
 
-            //Armour
-            var sheeld2 = new Armour("Shield of the Devil", 15, 20);
-            var sheeld = new Armour("Shield of Destiny", 10, 20);
+            Choices.ClassSelection(player);
 
-            //Weapon
-            var weapon1 = new Weapon("Sword of Destiny", 10, 20);
+            //Initianalize Map
+            Maps.AddStarsToMap(player,map1);
 
-            //Potion
-            var health = new Potion("Health potion", 10);
-            var health2 = new Potion("Health of a dragon", 15);
-            var speed = new Potion("Speed potion", 1);
-
-            //Key
-            var key1 = new Key("Dragon-Key");
-            var key2 = new Key("Troll-Key");
-
-            //Enemy
-            var enemy = new Character("Enemy1");
-
-            //Rooms
-            var room1E = new Room()
-            {
-                EnemyText = "Text",
-                InfoText = "This room is very dark except a light beside a door.",
-                Name = "1E",
-                WestDoor = "1C",
-                ArmourItem = sheeld
-            };
-            var room1C = new Room()
-            {
-                EnemyText = "Text",
-                InfoText = "Info",
-                Name = "1C",
-                WestDoor = "1W",
-                EastDoor = room1E.Name,
-                ArmourItem = sheeld,
-                Enemy = enemy
-            };
-            var room1W = new Room()
-            {
-                EnemyText = "Text",
-                InfoText = "Info",
-                Name = "1W",
-                EastDoor = "1C",
-                ArmourItem = sheeld2,
-                WeaponItem = weapon1,
-                Enemy = enemy
-            };
-
-
-            Choices.ClassSelection(mainCharacter);
-            //AddNewItemFromRoom(mainCharacter, room1C);
-            //AddNewItemFromRoom(mainCharacter, room1E);
-            //AddNewItemFromRoom(mainCharacter, room1W);
-            //mainCharacter.Inventory.PickupPotion(health);
-            //mainCharacter.Inventory.PickupPotion(speed);
-            //mainCharacter.Inventory.PickupPotion(health2);
-            //mainCharacter.Inventory.PickupKey(key1);
-            //mainCharacter.Inventory.PickupKey(key2);
 
             do
             {
-                switch (mainCharacter.NextRoom.ToUpper())
+                foreach (var room in map1)
                 {
-                    case "1E":
-                        CurrentRoom(mainCharacter, room1E);
-                        break;
-                    case "1C":
-                        CurrentRoom(mainCharacter, room1C);
-                        break;
-                    case "1W":
-                        CurrentRoom(mainCharacter, room1W);
-                        break;
-                    case "SURPRISEMESSAGE":
-                        SecretMessage.Message(mainCharacter.SecretMessage);
-                        mainCharacter.PlayerHasWon = true;
+                    if (player.SecretMessage.CollectedAllStars())
+                    {
+                        SecretMessage.Message(player.SecretMessage);
+                        player.PlayerHasWon = true;
                         Text.Continue();
                         break;
-                    default:
+                    }
+                    else if (player.NextRoom == room)
+                    {
+                        CurrentRoom(player, room);
                         break;
+                    }
+                    else if (player.Health < 1)
+                        player.PlayerHasLost = true;
+                    //else
+                    //    Console.WriteLine($"Something went wrong {room.Name}");
                 }
                 Console.Clear();
-                if(mainCharacter.SecretMessage.CollectedAllStars())
-                    mainCharacter.NextRoom = "SURPRISEMESSAGE";
 
-            } while (!mainCharacter.PlayerHasLost && !mainCharacter.PlayerHasWon);
+            } while (!player.PlayerHasLost && !player.PlayerHasWon);
 
-            Console.WriteLine("Outside of loop\nYou have won.");
+            if(player.PlayerHasWon)
+                Console.WriteLine("You have won.");
+            else if (player.PlayerHasLost)
+                Console.WriteLine("You Lost :/");
+            else
+                Console.WriteLine("Something went wrong");
 
-            Console.ReadKey();
+            Text.Continue();            
         }
 
 
         //When player enters a room
-        public static Character CurrentRoom(Character player, Room room)
+        public static Player CurrentRoom(Player player, Room room)
         {
-            var temp_player = (Character)player.Clone();
+            var temp_player = (Player)player.Clone();
 
             room.GetRoomStats();
 
@@ -137,15 +89,25 @@ namespace Text_Dungeon
                 Console.WriteLine("Room seems to be empty...");
             }
 
+            Stats.ResetStats(player, temp_player);
+
             if (room.HasItem())
                 Stats.AddNewItemFromRoom(player, room);
+            if (room.Stars != 0)
+                player.SecretMessage.CollectStar(room.Stars);
 
-            player.Health = temp_player.Health;
 
-            player.NextRoom = Choices.ChooseDoor(room);
+            if (!player.SecretMessage.CollectedAllStars())
+            {
+                player.NextRoom = Choices.ChooseDoor(room);
+                room.Stars = 0;
+            }
+
 
             return player;
         }
+
+
 
     }
 }
