@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Text_Dungeon.Model.Character;
 
 namespace Text_Dungeon.Tools
 {

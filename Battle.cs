@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Text_Dungeon.Model.Character;
+using Text_Dungeon.Model;
 using Text_Dungeon.Tools;
 
 namespace Text_Dungeon
 {
     public class Battle
     {
-        public static Character Battleground(Character player, Character enemy)
+        public static Player Battleground(Player player, Enemy enemy)
         {
             string s;
             do
@@ -97,7 +97,7 @@ namespace Text_Dungeon
             return defender;
         }
 
-        public static void Magic(Character player, Character boss)
+        public static void Magic(Player player, Character boss)
         {
             var temp = (Character)player.Clone();
 

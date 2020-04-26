@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
 using Text_Dungeon.Secret;
-using Text_Dungeon.Model.Character;
 using Text_Dungeon.Tools;
 
 namespace Text_Dungeon
@@ -24,45 +23,45 @@ namespace Text_Dungeon
             SecretMessage message = new SecretMessage(name);
 
             //Player
-            var mainCharacter = new Character(name)
+            Player player = new Player(name)
             {
                 SecretMessage = message
             };
 
-            Choices.ClassSelection(mainCharacter);
+            Choices.ClassSelection(player);
 
             //Initianalize Map
-            Maps.AddStarsToMap(mainCharacter,map1);
+            Maps.AddStarsToMap(player,map1);
 
 
             do
             {
                 foreach (var room in map1)
                 {
-                    if (mainCharacter.SecretMessage.CollectedAllStars())
+                    if (player.SecretMessage.CollectedAllStars())
                     {
-                        SecretMessage.Message(mainCharacter.SecretMessage);
-                        mainCharacter.PlayerHasWon = true;
+                        SecretMessage.Message(player.SecretMessage);
+                        player.PlayerHasWon = true;
                         Text.Continue();
                         break;
                     }
-                    else if (mainCharacter.NextRoom == room)
+                    else if (player.NextRoom == room)
                     {
-                        CurrentRoom(mainCharacter, room);
+                        CurrentRoom(player, room);
                         break;
                     }
-                    else if (mainCharacter.Health < 1)
-                        mainCharacter.PlayerHasLost = true;
+                    else if (player.Health < 1)
+                        player.PlayerHasLost = true;
                     //else
                     //    Console.WriteLine($"Something went wrong {room.Name}");
                 }
                 Console.Clear();
 
-            } while (!mainCharacter.PlayerHasLost && !mainCharacter.PlayerHasWon);
+            } while (!player.PlayerHasLost && !player.PlayerHasWon);
 
-            if(mainCharacter.PlayerHasWon)
+            if(player.PlayerHasWon)
                 Console.WriteLine("You have won.");
-            else if (mainCharacter.PlayerHasLost)
+            else if (player.PlayerHasLost)
                 Console.WriteLine("You Lost :/");
             else
                 Console.WriteLine("Something went wrong");
@@ -72,9 +71,9 @@ namespace Text_Dungeon
 
 
         //When player enters a room
-        public static Character CurrentRoom(Character player, Room room)
+        public static Player CurrentRoom(Player player, Room room)
         {
-            var temp_player = (Character)player.Clone();
+            var temp_player = (Player)player.Clone();
 
             room.GetRoomStats();
 

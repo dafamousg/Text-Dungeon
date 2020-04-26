@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Text_Dungeon.Model.Character;
 using Text_Dungeon.Tools;
 
 namespace Text_Dungeon.Secret

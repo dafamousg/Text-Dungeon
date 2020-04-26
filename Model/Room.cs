@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using Text_Dungeon.Tools;
 
-namespace Text_Dungeon.Model.Character
+namespace Text_Dungeon.Model
 {
     public class Room
     {
@@ -16,7 +16,7 @@ namespace Text_Dungeon.Model.Character
         public Room EastDoor { get; set; }
         public Room NorthDoor { get; set; }
         public Room SouthDoor { get; set; }
-        public Character Enemy { get; set; }
+        public Enemy Enemy { get; set; }
         public Armour ArmourItem { get; set; }
         public Weapon WeaponItem { get; set; }
         public Potion PotionItem { get; set; }
@@ -26,7 +26,7 @@ namespace Text_Dungeon.Model.Character
         {
             
         }
-        public Room(string info, string enemyText,Character enemy, Armour armour, Weapon weapon, Potion potion, Key key)
+        public Room(string info, string enemyText,Enemy enemy, Armour armour, Weapon weapon, Potion potion, Key key)
         {
             RoomText = info;
             EnemyText = enemyText;

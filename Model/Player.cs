@@ -2,13 +2,57 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Text_Dungeon.Secret;
 using Text_Dungeon.Tools;
 
-namespace Text_Dungeon.Model.Character
+namespace Text_Dungeon.Model
 {
-    public partial class Character
+    public class Player : Character
     {
+        Room _room;
+        SecretMessage _secretMessage;
 
+        //Next room to enter
+        public Room NextRoom
+        {
+            get { return _room; }
+            set { _room = value; }
+        }
+        public SecretMessage SecretMessage
+        {
+            get { return _secretMessage; }
+            set { _secretMessage = value; }
+        }
+
+        //Inventory
+        public Inventory Inventory = new Inventory();
+
+        public Player(string name)
+        {
+            Name = name;
+            Magic = 1;
+            Health = 100;
+            Strength = 10;
+            Defense = 10;
+            Speed = 1;
+            MaxHealth = Health;
+
+        }
+        public object Clone()
+        {
+            var clone = (Character)this.MemberwiseClone();
+            if (Weapon != null)
+                clone.Weapon = new Weapon(Weapon);
+            else
+                clone.Weapon = new Weapon();
+
+            if (Armour != null)
+                clone.Armour = new Armour(Armour);
+            else
+                clone.Armour = new Armour();
+
+            return clone;
+        }
         public void PickupArmour(Armour armour)
         {
             if (Armour != armour)
@@ -40,7 +84,6 @@ namespace Text_Dungeon.Model.Character
                 Console.Clear();
             }
         }
-
         public void DrinkPotion()
         {
             Potion selection;
@@ -87,7 +130,7 @@ namespace Text_Dungeon.Model.Character
                         Console.Clear();
                         break;
                 }
-                if(selection != null && exit)
+                if (selection != null && exit)
                 {
                     Console.WriteLine($"You drank: {selection.GetPotionType()} Potion.");
                     Thread.Sleep(3000);
@@ -96,9 +139,6 @@ namespace Text_Dungeon.Model.Character
 
             } while (!exit);
         }
-
-
-
         public void GetInfo()
         {
             Console.WriteLine($"Name: {Name}");
@@ -116,7 +156,7 @@ namespace Text_Dungeon.Model.Character
                 Inventory.GetInventory();
                 Text.Continue();
             }
-            if(SecretMessage != null)
+            if (SecretMessage != null)
                 SecretMessage.GetStars();
         }
     }

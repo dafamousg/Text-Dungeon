@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
-using Text_Dungeon.Model.Character;
 
 namespace Text_Dungeon.Tools
 {
     public class Choices
     {
         //Intro to the game and character select
-        public static Character ClassSelection(Character player)
+        public static Player ClassSelection(Player player)
         {
             int classSelected = 0;
             double elf = 0.20;
@@ -59,7 +58,7 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static Character Choose_Weapon(Character player, Weapon new_Weapon)
+        public static Player Choose_Weapon(Player player, Weapon new_Weapon)
         {
             string s;
             bool done = false;
@@ -96,7 +95,7 @@ namespace Text_Dungeon.Tools
 
             return player;
         }
-        public static Character Choose_Armour(Character player, Armour new_Armour)
+        public static Player Choose_Armour(Player player, Armour new_Armour)
         {
             string s;
             bool done = false;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Text_Dungeon.Model;
-using Text_Dungeon.Model.Character;
 using Text_Dungeon.Secret;
 using Text_Dungeon.Tools;
 
@@ -11,68 +10,10 @@ namespace Text_Dungeon
     public class Maps
     {
 
-        public static List<Room> TesttMap()
-        {
-            List<Room> map = new List<Room>();
-
-            //Armour
-            var sheeld2 = new Armour("Shield of the Devil", 15, 20);
-            var sheeld = new Armour("Shield of Destiny", 10, 20);
-
-            //Weapon
-            var weapon1 = new Weapon("Sword of Destiny", 10, 20);
-
-            //Potion
-            var health = new Potion("Spiritual Health");
-            var health2 = new Potion("SHealth");
-            var speed = new Potion("Speed potion");
-
-            //Key
-            var key1 = new Key("Dragon-Key");
-            var key2 = new Key("Troll-Key");
-
-            //Enemy
-            var enemy = new Character("Enemy1");
-
-            //Rooms
-            //var room1E = new Room()
-            //{
-            //    EnemyText = "Text",
-            //    RoomText = "This room is very dark except a light beside a door.",
-            //    Name = "1E",
-            //    WestDoor = "1C",
-            //    ArmourItem = sheeld
-            //};
-            //var room1C = new Room()
-            //{
-            //    EnemyText = "Text",
-            //    RoomText = "Info",
-            //    Name = "1C",
-            //    WestDoor = "1W",
-            //    EastDoor = room1E,
-            //    ArmourItem = sheeld,
-            //    Enemy = enemy
-            //};
-            //var room1W = new Room()
-            //{
-            //    EnemyText = "Text",
-            //    RoomText = "Info",
-            //    Name = "1W",
-            //    EastDoor = "1C",
-            //    ArmourItem = sheeld2,
-            //    WeaponItem = weapon1,
-            //    Enemy = enemy
-            //};
-
-
-            
-
-            return map;
-
-        }
-
-
-
+        /// <summary>
+        /// Adds maps to a list
+        /// </summary>
+        /// <returns> Map list</returns>
         public static List<Room> FirstMap()
         {
             List<Room> map = new List<Room>();
@@ -97,9 +38,9 @@ namespace Text_Dungeon
             var GoblinKey = new Key("Goblin");
 
             //Enemy
-            var ElfeEnemy = new Character("Elfe Warrior");
-            var GoblinEnemy = new Character("Goblin King");
-            var DragonEnemy = new Character("Dragan of Darkness");
+            Enemy ElfeEnemy = new Enemy("Elfe Warrior");
+            Enemy GoblinEnemy = new Enemy("Goblin King");
+            Enemy DragonEnemy = new Enemy("Dragan of Darkness");
 
             //Rooms
             Room room1E = new Room(Text.infoRoom1E, Text.infoRoom1E, ElfeEnemy, null, SilverSword, st3, null);
@@ -121,21 +62,17 @@ namespace Text_Dungeon
         }
 
 
-        public static void AddStarsToMap(Character player, List<Room> map)
+        /// <summary>
+        /// Adds random amount of stars to maps in list calculated from player max stars
+        /// </summary>
+        /// <param name="player">main character</param>
+        /// <param name="map"> List of maps in game</param>
+        public static void AddStarsToMap(Player player, List<Room> map)
         {
             Random rnd = new Random();
             int amount = 0;
             int maxStars = player.SecretMessage.GetMaxStars();
             int rndStars;
-
-            //int roomsWithEnemy = 0;
-            //decimal stars = player.SecretMessage.GetMaxStars() / roomsWithEnemy;
-
-            //foreach (var item in map)
-            //{
-            //    if (item.Enemy != null)
-            //        roomsWithEnemy++;
-            //}
 
             do
             {

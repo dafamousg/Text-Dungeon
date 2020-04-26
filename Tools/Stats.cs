@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Text_Dungeon.Model.Character;
+using Text_Dungeon.Model;
 
 namespace Text_Dungeon.Tools
 {
@@ -22,7 +22,7 @@ namespace Text_Dungeon.Tools
             return (int)(value * (increase + character));
         }
 
-        public static void AddNewItemFromRoom(Character player, Room room)
+        public static void AddNewItemFromRoom(Player player, Room room)
         {
             if (room.KeyItem != null)
             {
@@ -57,7 +57,7 @@ namespace Text_Dungeon.Tools
             }
         }
 
-        public static void ResetStats(Character player, Character temp)
+        public static void ResetStats(Player player, Player temp)
         {
             player.Health = temp.Health;
 
